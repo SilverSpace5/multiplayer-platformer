@@ -36,10 +36,17 @@ func _connected(proto):
 
 func playerDisconnected(id):
 	playerData.erase(id)
+	var players = get_tree().get_root().get_node("Menu/Players")
+	if players.has_node(id):
+		players.get_node(id).queue_free()
 	print(id + " Disconnected :(")
 
 func playerConnected(id):
 	print(id + " Connected!")
+	var player2 = load("res://PlayerMenu.tscn").instance()
+	get_tree().get_root().get_node("Menu/Players").add_child(player2)
+	player2.id = id
+	player2.name = id
 
 func success():
 	print("Connected!")
