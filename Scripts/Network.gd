@@ -5,22 +5,25 @@ var id = ""
 var connected = false
 var data = {}
 var playerData = {}
+var foundServer = false
 
 func sendData(data):
-	server.get_peer(1).put_packet(JSON.print(data).to_utf8())
+	if foundServer:
+		server.get_peer(1).put_packet(JSON.print(data).to_utf8())
 
 func _ready():
 	id = global.getId(10)
+	server.connect("data_received", self, "_onData")
+	server.connect("connection_established", self, "_connected")
+	server.connect("connection_closed", self, "_disconnected")
+	server.connect("connection_error", self, "_disconnected")
 	print("Connecting...")
 	while not connected:
 		server.connect_to_url("wss://server-template.silverspace505.repl.co")
-		server.connect("data_received", self, "_onData")
-		server.connect("connection_established", self, "_connected")
 		yield(get_tree().create_timer(3), "timeout")
 		if not connected:
 			print("Retrying")
 			server.disconnect_from_host()
-	
 	
 func _process(delta):
 	server.poll()
@@ -30,8 +33,21 @@ func _process(delta):
 		sendData({"broadcast": ["data", [id, data]]})
 	#client.get_peer(1).put_packet()
 
+func _disconnected(wasClean):
+	connected = false
+	foundServer = false
+	print("Disconnected, reconnecting")
+	while not connected:
+		server.connect_to_url("wss://server-template.silverspace505.repl.co")
+		yield(get_tree().create_timer(3), "timeout")
+		if not connected:
+			print("Retrying")
+			server.disconnect_from_host()
+	
+
 func _connected(proto):
 	print("Found Server")
+	foundServer = true
 	sendData({"connected": [id, "oiesnfoi"]})
 
 func playerDisconnected(id):
@@ -63,3 +79,5 @@ func _onData():
 		playerDisconnected(data["playerDisconnected"])
 	if data.has("playerConnected"):
 		playerConnected(data["playerConnected"])
+	if data.has("playerData"):
+		playerData = data["playerData"]

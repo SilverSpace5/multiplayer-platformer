@@ -7,17 +7,19 @@ var velocity = Vector2.ZERO
 var anim = "Idle"
 var moveTimer = 0
 var id = ""
+var timer = 0
+var lastPos = Vector2(0, 0)
 
 func _process(delta):
+	timer += delta
+	var onFloor = false
+	for body in $Area2D.get_overlapping_bodies():
+		if body.name != name:
+			onFloor = true
 	if id == network.id:
 		moveTimer -= delta
 		var target = get_global_mouse_position()
 		var dis = target.distance_to(position)
-		
-		var onFloor = false
-		for body in $Area2D.get_overlapping_bodies():
-			if body.name != name:
-				onFloor = true
 		
 		velocity.y += gravity
 		velocity.x *= 0.9
@@ -35,7 +37,8 @@ func _process(delta):
 					velocity.y = -jumpSpeed
 		if moveTimer <= 0:
 			if dis < 300:
-				moveTimer = rand_range(0.025, 0.2)
+				moveTimer = 0
+				speed /= 10
 			else:
 				moveTimer = rand_range(0.1, 0.25)
 			var move = 0
@@ -45,12 +48,22 @@ func _process(delta):
 				move = -1
 			if dis >= 300:
 				move = 0
-			if move > 0 or rand_range(0, 100) < 25:
-				velocity.x += speed
-				$Player.scale.x = 4
-			if move < 0 or rand_range(0, 100) < 25:
-				velocity.x -= speed
-				$Player.scale.x = -4
+				if move > 0 or rand_range(0, 100) < 25:
+					velocity.x += speed
+					$Player.scale.x = 4
+				if move < 0 or rand_range(0, 100) < 25:
+					velocity.x -= speed
+					$Player.scale.x = -4
+			else:
+				if move > 0:
+					velocity.x += speed
+					$Player.scale.x = 4
+				if move < 0:
+					velocity.x -= speed
+					$Player.scale.x = -4
+					
+			if dis < 300:
+				speed *= 10
 		
 		anim = "Idle"
 		if abs(velocity.x) > speed/10:
@@ -62,10 +75,28 @@ func _process(delta):
 		network.data["pos"] = [position.x, position.y]
 		network.data["anim"] = anim
 		network.data["scale"] = $Player.scale.x
+		network.data["velocity"] = [velocity.x, velocity.y]
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
-				$AnimationPlayer.play(network.playerData[id]["anim"])
-				$Tween.interpolate_property(self, "position", position, Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]), 0.1)
-				$Tween.start()
+				if lastPos != Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]):
+					$Tween.interpolate_property(self, "position", position, Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]), 0.1)
+					$Tween.start()
+					lastPos = Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1])
 				$Player.scale.x = network.playerData[id]["scale"]
+				if $Tween.is_active():
+					$AnimationPlayer.play(network.playerData[id]["anim"])
+					velocity = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
+			if not $Tween.is_active():
+				anim = "Idle"
+				if abs(velocity.x) > speed/10:
+					anim = "Run"
+				if not onFloor:
+					anim = "Jump"
+				$AnimationPlayer.play(anim)
+				move_and_slide(velocity, Vector2.UP)
+				velocity.y += gravity
+				velocity.x *= 0.9
+		else:
+			if timer > 1:
+				queue_free()

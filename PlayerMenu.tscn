@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/PlayerMenu.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Players/blue-guy.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Players/tim.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 14 )
@@ -179,5 +179,5 @@ position = Vector2( 0, 10.5 )
 shape = SubResource( 10 )
 
 [node name="Tween" type="Tween" parent="."]
-playback_speed = 1.5
-playback/speed = 1.5
+playback_speed = 2.0
+playback/speed = 2.0
