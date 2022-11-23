@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scenes/PlayerMenu.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/PlayerMenu.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Players/tim.png" type="Texture" id=2]
+[ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 14 )
@@ -143,6 +144,12 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 10, 1.5 )
 
+[sub_resource type="DynamicFont" id=11]
+size = 50
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
 [node name="PlayerMenu" type="KinematicBody2D"]
 position = Vector2( 85, 290 )
 z_index = -1
@@ -181,3 +188,12 @@ shape = SubResource( 10 )
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 2.0
 playback/speed = 2.0
+
+[node name="Username" type="Label" parent="."]
+margin_left = -75.0
+margin_top = -28.0
+margin_right = 525.0
+margin_bottom = 22.0
+rect_scale = Vector2( 0.25, 0.25 )
+custom_fonts/font = SubResource( 11 )
+align = 1

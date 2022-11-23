@@ -17,6 +17,8 @@ func _process(delta):
 		if body.name != name:
 			onFloor = true
 	if id == network.id:
+		$Player.texture = global.textures[global.saveData["character"]]
+		$Username.text = global.saveData["username"]
 		moveTimer -= delta
 		var target = get_global_mouse_position()
 		var dis = target.distance_to(position)
@@ -76,9 +78,13 @@ func _process(delta):
 		network.data["anim"] = anim
 		network.data["scale"] = $Player.scale.x
 		network.data["velocity"] = [velocity.x, velocity.y]
+		network.data["character"] = global.saveData["character"]
+		network.data["username"] = global.saveData["username"]
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
+				$Player.texture = global.textures[network.playerData[id]["character"]]
+				$Username.text = network.playerData[id]["username"]
 				if lastPos != Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]):
 					$Tween.interpolate_property(self, "position", position, Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]), 0.1)
 					$Tween.start()

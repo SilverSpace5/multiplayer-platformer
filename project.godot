@@ -11,14 +11,15 @@ config_version=4
 [application]
 
 config/name="Multiplayer Platformer"
-run/main_scene="res://Scenes/Menu.tscn"
+run/main_scene="res://Loading.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-network="*res://Scripts/Network.gd"
-global="*res://Scripts/Global.gd"
+network="*res://Scripts/Autoload/Network.gd"
+global="*res://Scripts/Autoload/Global.gd"
 Cursor="*res://Cursor.tscn"
+SaveLoad="*res://Scripts/Autoload/SaveLoad.gd"
 
 [display]
 
