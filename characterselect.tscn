@@ -51,6 +51,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 4 )
 custom_styles/normal = ExtResource( 3 )
 enabled_focus_mode = 0
 text = "Enter The World"
@@ -60,9 +61,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 446.0
+margin_left = 441.0
 margin_top = 389.0
-margin_right = 543.0
+margin_right = 538.0
 margin_bottom = 446.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -71,6 +72,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 4 )
 custom_styles/normal = ExtResource( 3 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
@@ -78,3 +80,4 @@ text = "Pick"
 
 [connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Pick" to="." method="_on_Play2_pressed"]
+[connection signal="pressed" from="Pick" to="." method="_on_Pick_pressed"]
