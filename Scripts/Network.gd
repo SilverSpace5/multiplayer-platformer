@@ -30,7 +30,7 @@ func _process(delta):
 	data["jumps"] = global.jumps
 	if connected:
 		playerData[id] = data
-		sendData({"broadcast": ["data", [id, data]]})
+		sendData({"broadcast": ["data", [id, data], false]})
 	#client.get_peer(1).put_packet()
 
 func _disconnected(wasClean):
@@ -70,6 +70,8 @@ func success():
 	
 func _onData():
 	var data = JSON.parse(server.get_peer(1).get_packet().get_string_from_utf8()).result
+	if data.has("important"):
+		sendData({"recieved": data["important"]})
 	if data.has("success"):
 		if data["success"]:
 			success()
