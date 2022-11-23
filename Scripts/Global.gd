@@ -7,7 +7,6 @@ var sceneName = "Menu"
 
 func _ready():
 	scene = get_tree().get_root().get_node(sceneName)
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _process(delta):
 	scene = get_tree().get_root().get_node(sceneName)
