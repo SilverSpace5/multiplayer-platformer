@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Players/blue-guy2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/vent_(sus).png" type="Texture" id=2]
 [ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Players/sus.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 14 )
@@ -109,6 +110,9 @@ tracks/0/keys = {
 "values": [ 8 ]
 }
 
+[sub_resource type="Animation" id=12]
+resource_name = "New Anim"
+
 [sub_resource type="Animation" id=8]
 length = 0.001
 tracks/0/type = "value"
@@ -141,6 +145,9 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4 ]
 }
 
+[sub_resource type="Animation" id=13]
+resource_name = "vent"
+
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 6, 1.5 )
 
@@ -157,9 +164,16 @@ speed = 200.0
 gravity = 35.0
 jumpSpeed = 35.0
 
+[node name="Vent(sus)" type="Sprite" parent="."]
+position = Vector2( 9.53674e-07, 9.25 )
+scale = Vector2( 3, 2.0625 )
+texture = ExtResource( 2 )
+hframes = 5
+frame = 4
+
 [node name="Player" type="Sprite" parent="."]
 scale = Vector2( 4, 4 )
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 hframes = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -174,8 +188,10 @@ anims/CrouchWalk = SubResource( 4 )
 anims/Dive = SubResource( 5 )
 anims/Idle = SubResource( 6 )
 anims/Jump = SubResource( 7 )
+"anims/New Anim" = SubResource( 12 )
 anims/RESET = SubResource( 8 )
 anims/Run = SubResource( 9 )
+anims/vent = SubResource( 13 )
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 0, 7 )
