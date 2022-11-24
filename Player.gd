@@ -11,11 +11,9 @@ var timer = 0
 var lastPos = Vector2.ZERO
 var diving = false
 var move = Vector2.ZERO
-var updateTimer = 0
 
 func _process(delta):
 	timer += delta
-	updateTimer += delta
 	var onFloor = false
 	for body in $Area2D.get_overlapping_bodies():
 		if body.name != name:
@@ -78,14 +76,10 @@ func _process(delta):
 				$Player.texture = global.textures[network.playerData[id]["character"]]
 				$Username.text = network.playerData[id]["username"]
 				if lastPos != pos:
-					if updateTimer > 0.1:
-						$Tween.interpolate_property(self, "position", position, pos, 0.5)
-					else:
-						$Tween.interpolate_property(self, "position", position, pos, 0.1)
+					$Tween.interpolate_property(self, "position", position, pos, 0.1)
 					$Tween.start()
 					lastPos = pos
 					velocity = vel
-					updateTimer = 0
 				$Player.scale.x = network.playerData[id]["scale"]
 				if $Tween.is_active():
 					$AnimationPlayer.play(network.playerData[id]["anim"])
