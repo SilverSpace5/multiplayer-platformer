@@ -43,6 +43,8 @@ func _process(delta):
 	scene = get_tree().get_root().get_node(sceneName)
 	# Sends the current scene to everyone whos playing
 	network.data["scene"] = sceneName
+	# Sends the time played to everyone
+	network.data["timer"] = timer
 	# Locks and unlocks the cursor
 	if Input.is_mouse_button_pressed(1):
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
