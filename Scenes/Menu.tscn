@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/defualt.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Assets/arrow.png" type="Texture" id=7]
 [ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Assets/Players/bob.png" type="Texture" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_bottom = 13.0
@@ -33,10 +34,6 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
-[sub_resource type="StreamTexture" id=14]
-flags = 1
-load_path = "res://.import/blue-guy2.png-7bcf7d3240e4abac5eedd2ff6f085437.stex"
 
 [sub_resource type="Animation" id=6]
 resource_name = "Attack"
@@ -342,7 +339,7 @@ text = "Back"
 [node name="Player" type="Sprite" parent="Rotate/Customization"]
 position = Vector2( 507, 299 )
 scale = Vector2( 10, 10 )
-texture = SubResource( 14 )
+texture = ExtResource( 9 )
 hframes = 13
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Rotate/Customization"]
