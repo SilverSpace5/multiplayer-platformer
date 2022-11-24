@@ -93,7 +93,7 @@ func _process(delta):
 				$AnimationPlayer.play(anim)
 				move_and_slide(velocity, Vector2.UP)
 				velocity.y += gravity
-				velocity.x *= 0.99
+				velocity.x *= 0.9
 		else:
 			if timer > 1:
 				queue_free()
