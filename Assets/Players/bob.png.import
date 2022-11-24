@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blue-guy.png-62cad47269ef1dd1cac925881ab16965.stex"
+path="res://.import/bob.png-6d799b5613b061e5f9dbe4e3fd8440e9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Players/blue-guy.png"
-dest_files=[ "res://.import/blue-guy.png-62cad47269ef1dd1cac925881ab16965.stex" ]
+source_file="res://Assets/Players/bob.png"
+dest_files=[ "res://.import/bob.png-6d799b5613b061e5f9dbe4e3fd8440e9.stex" ]
 
 [params]
 

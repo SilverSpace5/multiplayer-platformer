@@ -14,3 +14,9 @@ func _ready():
 func _process(delta):
 	if global.player:
 		$Camera2D.position += (global.player.position-$Camera2D.position)/5
+
+func _on_Menu_pressed():
+	global.player = null
+	network.sendData({"broadcast": [{"leaveGame": network.id, "joinMenu": network.id}, true]})
+	$Camera2D/Menu.text = "Loading..."
+	get_tree().change_scene("res://Scenes/Menu.tscn")

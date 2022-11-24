@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/PlayerMenu.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Players/blue-guy2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Players/bob.png" type="Texture" id=2]
 [ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -50,8 +50,7 @@ tracks/0/keys = {
 "values": [ 5 ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "CrouchWalk"
+[sub_resource type="Animation" id=20]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -191,7 +190,7 @@ hframes = 13
 autoplay = "Idle"
 anims/Attack = SubResource( 12 )
 anims/Crouch = SubResource( 13 )
-anims/CrouchWalk = SubResource( 14 )
+anims/CrouchWalk = SubResource( 20 )
 anims/Dive = SubResource( 15 )
 anims/Idle = SubResource( 16 )
 anims/Jump = SubResource( 17 )

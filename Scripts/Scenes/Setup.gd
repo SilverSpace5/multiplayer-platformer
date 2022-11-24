@@ -10,6 +10,7 @@ func _ready():
 	global.sceneName = "Setup"
 	# Loads the username
 	$Username.text = global.saveData["username"]
+
 	$Player.texture = global.textures[global.saveData["character"]]
 
 func _process(delta):

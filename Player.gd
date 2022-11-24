@@ -24,7 +24,7 @@ func _process(delta):
 	onFloor3 -= 1
 	dived -= delta
 	if onFloor2:
-		onFloor3 = 10
+		onFloor3 = 3
 	var onFloor = onFloor3 > 0
 	if id == network.id:
 		global.player = self
@@ -61,6 +61,7 @@ func _process(delta):
 		if jumpPress > 0 and onFloor:
 			jump = 0
 			jumpPress = 0
+			onFloor3 = 0
 			velocity.y = -jumpSpeed
 		if Input.is_action_pressed("jump") and jump < 6:
 			jump += 1
@@ -92,7 +93,7 @@ func _process(delta):
 		if diving:
 			anim = "Dive"
 		if Input.is_action_just_pressed("attack") or $AnimationPlayer.current_animation == "Attack" or $AnimationPlayer.current_animation == "vent":
-			if global.saveData["character"] == 3:
+			if global.saveData["character"] == 999:
 				if $Player.visible:
 					anim = "vent"
 				elif not $AnimationPlayer.current_animation == "vent":
@@ -107,6 +108,8 @@ func _process(delta):
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
+				collision_layer = 2
+				collision_mask = 2
 				var pos = Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1])
 				var vel = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
 				$Player.texture = global.textures[network.playerData[id]["character"]]

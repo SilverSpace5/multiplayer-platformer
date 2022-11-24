@@ -13,7 +13,7 @@ func _ready():
 	$Rotate/Customization/Username.text = global.saveData["username"]
 	$Rotate/Customization/Player.texture = global.textures[global.saveData["character"]]
 	global.sceneName = "Menu"
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(0.1), "timeout")
 	for player in network.playerData:
 		if network.playerData[player]["scene"] == "Menu":
 			var player2 = load("res://PlayerMenu.tscn").instance()
@@ -24,7 +24,7 @@ func _ready():
 func _on_Play_pressed():
 	network.sendData({"broadcast": [{"leaveMenu": network.id, "joinGame": network.id}, true]})
 	$Rotate/Menu/Buttons/Play.text = "Loading..."
-	get_tree().change_scene("res://Scenes/Game.tscn")
+	get_tree().change_scene("res://Scenes/game.tscn")
 	
 func _on_Customization_pressed():
 	$Rotate/Menu.visible = false

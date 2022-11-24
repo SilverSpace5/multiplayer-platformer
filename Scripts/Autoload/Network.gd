@@ -65,8 +65,8 @@ func _disconnected(wasClean):
 func _connected(proto):
 	print("Found Server")
 	foundServer = true
-	# Requests to the server to join (oiesnfoi is the password)
-	sendData({"connected": [id, "oiesnfoi"]})
+	# Requests to the server to join (this detects the version of the game)
+	sendData({"connected": [id, "multiplayer-platformer-v1"]})
 
 func playerDisconnected(id):
 	playerData.erase(id)
@@ -88,6 +88,12 @@ func joinMenu(id):
 
 func leaveMenu(id):
 	if global.sceneName == "Menu":
+		var players = global.scene.get_node("Players")
+		if players.has_node(id):
+			players.get_node(id).queue_free()
+
+func leaveGame(id):
+	if global.sceneName == "Game":
 		var players = global.scene.get_node("Players")
 		if players.has_node(id):
 			players.get_node(id).queue_free()
@@ -124,3 +130,5 @@ func _onData():
 		leaveMenu(data["leaveMenu"])
 	if data.has("joinGame"):
 		joinGame(data["joinGame"])
+	if data.has("leaveGame"):
+		leaveGame(data["leaveGame"])

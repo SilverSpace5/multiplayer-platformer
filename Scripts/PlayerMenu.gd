@@ -22,6 +22,7 @@ func _process(delta):
 		moveTimer -= delta
 		var target = get_global_mouse_position()
 		var dis = target.distance_to(position)
+		var disX = abs(target.x-position.x)
 		
 		velocity.y += gravity
 		velocity.x *= 0.9
@@ -29,14 +30,14 @@ func _process(delta):
 			velocity.y = gravity
 		if is_on_floor():
 			velocity.y = 0
-			if dis < 300:
+			if dis < 200:
 				if position.y > target.y: #rand_range(0, 100) < 1:
 					velocity.y = -jumpSpeed
 			else:
 				if rand_range(0, 100) < 1:
 					velocity.y = -jumpSpeed
 		if moveTimer <= 0:
-			if dis < 300:
+			if dis < 200 and disX > 20:
 				moveTimer = 0
 				speed /= 10
 			else:
@@ -46,7 +47,7 @@ func _process(delta):
 				move = 1
 			if position.x > target.x:
 				move = -1
-			if dis >= 300:
+			if dis >= 200:
 				move = 0
 				if move > 0 or rand_range(0, 100) < 25:
 					velocity.x += speed
@@ -54,7 +55,7 @@ func _process(delta):
 				if move < 0 or rand_range(0, 100) < 25:
 					velocity.x -= speed
 					$Player.scale.x = -4
-			else:
+			elif disX > 20:
 				if move > 0:
 					velocity.x += speed
 					$Player.scale.x = 4
@@ -62,7 +63,7 @@ func _process(delta):
 					velocity.x -= speed
 					$Player.scale.x = -4
 					
-			if dis < 300:
+			if dis < 200 and disX > 20:
 				speed *= 10
 		
 		anim = "Idle"
@@ -81,6 +82,8 @@ func _process(delta):
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
+				collision_layer = 2
+				collision_mask = 2
 				$Player.texture = global.textures[network.playerData[id]["character"]]
 				$Username.text = network.playerData[id]["username"]
 				if lastPos != Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]):
