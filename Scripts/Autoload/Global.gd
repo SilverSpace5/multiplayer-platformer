@@ -15,7 +15,7 @@ var textures = []
 # 0 = Blue Guy, 1 = Tim
 
 func _ready():
-	for character in ["blue-guy2", "tim", "Phil", "sus"]:
+	for character in ["blue-guy2", "tim2", "Phil", "sus"]:
 		textures.append(load("res://Assets/Players/" + character + ".png"))
 	
 	# Gets the current scene
