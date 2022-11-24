@@ -217,6 +217,7 @@ anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 512, 304 )
 
 [node name="Menu" type="Control" parent="Rotate"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -265,7 +266,6 @@ enabled_focus_mode = 0
 text = "Customization"
 
 [node name="Customization" type="Control" parent="Rotate"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
