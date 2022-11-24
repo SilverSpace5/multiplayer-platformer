@@ -1,7 +1,6 @@
 extends Node
 
 var letters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-var jumps = 0
 var scene:Node = null
 var sceneName = "Loading"
 var saveData = {}
@@ -11,6 +10,7 @@ var defaultData = {
 	"character": 0,
 	"setup": false
 }
+var player = null
 var textures = []
 # 0 = Blue Guy, 1 = Tim
 

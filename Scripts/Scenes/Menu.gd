@@ -13,15 +13,18 @@ func _ready():
 	$Rotate/Customization/Username.text = global.saveData["username"]
 	$Rotate/Customization/Player.texture = global.textures[global.saveData["character"]]
 	global.sceneName = "Menu"
+	yield(get_tree().create_timer(0.5), "timeout")
 	for player in network.playerData:
-		var player2 = load("res://PlayerMenu.tscn").instance()
-		$Players.add_child(player2)
-		player2.id = player
-		player2.name = player
+		if network.playerData[player]["scene"] == "Menu":
+			var player2 = load("res://PlayerMenu.tscn").instance()
+			$Players.add_child(player2)
+			player2.id = player
+			player2.name = player
 
 func _on_Play_pressed():
-	get_tree().change_scene("res://Scenes/game.tscn")
+	network.sendData({"broadcast": [{"leaveMenu": network.id, "joinGame": network.id}, true]})
 	$Rotate/Menu/Buttons/Play.text = "Loading..."
+	get_tree().change_scene("res://Scenes/Game.tscn")
 	
 func _on_Customization_pressed():
 	$Rotate/Menu.visible = false

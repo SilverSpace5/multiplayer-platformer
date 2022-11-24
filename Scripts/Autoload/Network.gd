@@ -27,9 +27,8 @@ func _ready():
 	
 func _process(delta):
 	server.poll()
-	data["jumps"] = global.jumps
+	playerData[id] = data
 	if connected:
-		playerData[id] = data
 		sendData({"broadcast": [{"data": [id, data]}, false]})
 	#client.get_peer(1).put_packet()
 
@@ -52,7 +51,7 @@ func _connected(proto):
 
 func playerDisconnected(id):
 	playerData.erase(id)
-	if global.sceneName == "Menu":
+	if global.sceneName == "Menu" or global.sceneName == "Game":
 		var players = global.scene.get_node("Players")
 		if players.has_node(id):
 			players.get_node(id).queue_free()
@@ -60,8 +59,23 @@ func playerDisconnected(id):
 
 func playerConnected(id):
 	print(id + " Connected!")
+
+func joinMenu(id):
 	if global.sceneName == "Menu":
 		var player2 = load("res://PlayerMenu.tscn").instance()
+		global.scene.get_node("Players").add_child(player2)
+		player2.id = id
+		player2.name = id
+
+func leaveMenu(id):
+	if global.sceneName == "Menu":
+		var players = global.scene.get_node("Players")
+		if players.has_node(id):
+			players.get_node(id).queue_free()
+
+func joinGame(id):
+	if global.sceneName == "Game":
+		var player2 = load("res://Player.tscn").instance()
 		global.scene.get_node("Players").add_child(player2)
 		player2.id = id
 		player2.name = id
@@ -85,3 +99,9 @@ func _onData():
 		playerConnected(data["playerConnected"])
 	if data.has("playerData"):
 		playerData = data["playerData"]
+	if data.has("joinMenu"):
+		joinMenu(data["joinMenu"])
+	if data.has("leaveMenu"):
+		leaveMenu(data["leaveMenu"])
+	if data.has("joinGame"):
+		joinGame(data["joinGame"])

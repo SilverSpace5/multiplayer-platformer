@@ -4,6 +4,7 @@ var timer = 0
 
 func _ready():
 	if global.saveData["setup"]:
+		network.sendData({"broadcast": [{"joinMenu": network.id}, true]})
 		get_tree().change_scene("res://Scenes/Menu.tscn")
 		
 	global.sceneName = "Setup"

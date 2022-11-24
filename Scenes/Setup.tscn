@@ -245,7 +245,6 @@ custom_styles/pressed = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 enabled_focus_mode = 0
 icon = ExtResource( 7 )
-icon_align = 1
 expand_icon = true
 
 [node name="Left" type="Button" parent="."]
@@ -260,7 +259,6 @@ custom_styles/pressed = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 enabled_focus_mode = 0
 icon = ExtResource( 7 )
-icon_align = 1
 expand_icon = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

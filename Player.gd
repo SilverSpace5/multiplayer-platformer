@@ -5,10 +5,11 @@ export (float) var gravity = 50
 export (float) var jumpSpeed = 1000
 var velocity = Vector2.ZERO
 var anim = "Idle"
-var moveTimer = 0
 var id = ""
+var jump = 0
 var timer = 0
-var lastPos = Vector2(0, 0)
+var lastPos = Vector2.ZERO
+var diving = false
 
 func _process(delta):
 	timer += delta
@@ -17,67 +18,52 @@ func _process(delta):
 		if body.name != name:
 			onFloor = true
 	if id == network.id:
+		global.player = self
 		$Player.texture = global.textures[global.saveData["character"]]
 		$Username.text = global.saveData["username"]
-		moveTimer -= delta
-		var target = get_global_mouse_position()
-		var dis = target.distance_to(position)
 		
+		if Input.is_action_pressed("down"):
+			diving = true
+		
+		if diving:
+			if velocity.y < gravity:
+				velocity.y = gravity
+			gravity *= 2
 		velocity.y += gravity
-		velocity.x *= 0.9
-		if is_on_ceiling():
-			velocity.y = gravity
+		velocity.x *= 0.5
+		if diving:
+			gravity /= 2
+		
+		if onFloor:
+			diving = false
+		
 		if is_on_floor():
 			velocity.y = 0
-			if dis < 300:
-				if position.y > target.y: #rand_range(0, 100) < 1:
-					velocity.y = -jumpSpeed
-			else:
-				if rand_range(0, 100) < 1:
-					velocity.y = -jumpSpeed
-		if moveTimer <= 0:
-			if dis < 300:
-				moveTimer = 0
-				speed /= 10
-			else:
-				moveTimer = rand_range(0.1, 0.25)
-			var move = 0
-			if position.x < target.x:
-				move = 1
-			if position.x > target.x:
-				move = -1
-			if dis >= 300:
-				move = 0
-				if move > 0 or rand_range(0, 100) < 25:
-					velocity.x += speed
-					$Player.scale.x = 4
-				if move < 0 or rand_range(0, 100) < 25:
-					velocity.x -= speed
-					$Player.scale.x = -4
-			else:
-				if move > 0:
-					velocity.x += speed
-					$Player.scale.x = 4
-				if move < 0:
-					velocity.x -= speed
-					$Player.scale.x = -4
-					
-			if dis < 300:
-				speed *= 10
+		if Input.is_action_just_pressed("jump") and onFloor:
+			jump = 0
+			velocity.y = -jumpSpeed
+		if Input.is_action_pressed("jump") and jump < 6:
+			jump += 1
+			velocity.y += -jumpSpeed*jump
+		if Input.is_action_pressed("left"):
+			velocity.x -= speed
+			$Player.scale.x = -4
+		if Input.is_action_pressed("right"):
+			velocity.x += speed
+			$Player.scale.x = 4
+		
+		if is_on_ceiling():
+			velocity.y = gravity
 		
 		anim = "Idle"
 		if abs(velocity.x) > speed/10:
 			anim = "Run"
 		if not onFloor:
 			anim = "Jump"
+		if diving:
+			anim = "Dive"
 		$AnimationPlayer.play(anim)
 		move_and_slide(velocity, Vector2.UP)
-		network.data["pos"] = [position.x, position.y]
-		network.data["anim"] = anim
-		network.data["scale"] = $Player.scale.x
-		network.data["velocity"] = [velocity.x, velocity.y]
-		network.data["character"] = global.saveData["character"]
-		network.data["username"] = global.saveData["username"]
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
@@ -100,7 +86,16 @@ func _process(delta):
 				$AnimationPlayer.play(anim)
 				move_and_slide(velocity, Vector2.UP)
 				velocity.y += gravity
-				velocity.x *= 0.9
+				velocity.x *= 0.99
 		else:
 			if timer > 1:
 				queue_free()
+
+func _on_sendData_timeout():
+	if network.id == id:
+		network.data["pos"] = [position.x, position.y]
+		network.data["anim"] = anim
+		network.data["scale"] = $Player.scale.x
+		network.data["velocity"] = [velocity.x, velocity.y]
+		network.data["character"] = global.saveData["character"]
+		network.data["username"] = global.saveData["username"]
