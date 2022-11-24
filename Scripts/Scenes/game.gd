@@ -7,7 +7,7 @@ func _ready():
 		if network.playerData[player]["scene"] == "Game":
 			var player2 = load("res://Player.tscn").instance()
 			$Players.add_child(player2)
-			player2.position = Vector2(100, 500)
+			player2.position = Vector2(100, 125)
 			player2.id = player
 			player2.name = player
 
