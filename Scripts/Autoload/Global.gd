@@ -12,10 +12,11 @@ var defaultData = {
 }
 var player = null
 var textures = []
+var timer = 0
 # 0 = Blue Guy, 1 = Tim
 
 func _ready():
-	for character in ["blue-guy2", "tim2", "Phil", "sus"]:
+	for character in ["blue-guy2", "tim2", "Phil"]:
 		textures.append(load("res://Assets/Players/" + character + ".png"))
 	
 	# Gets the current scene
@@ -32,6 +33,7 @@ func _ready():
 			saveData.erase(key)
 
 func _process(delta):
+	timer += delta
 	# Updates save data if needed
 	if saveData != lastData:
 		lastData = saveData.duplicate(true)

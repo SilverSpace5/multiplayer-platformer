@@ -56,9 +56,15 @@ func _process(delta):
 		if is_on_ceiling():
 			velocity.y = gravity
 		
-		anim = "Idle"
+		if Input.is_action_pressed("down"):
+			anim = "Crouch"
+		else:
+			anim = "Idle"
 		if abs(velocity.x) > speed/10:
-			anim = "Run"
+			if Input.is_action_pressed("down"):
+				anim = "CrouchWalk"
+			else:
+				anim = "Run"
 		if not onFloor:
 			anim = "Jump"
 		if diving:
