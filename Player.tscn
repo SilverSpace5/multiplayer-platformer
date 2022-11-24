@@ -6,7 +6,7 @@
 [ext_resource path="res://Assets/Players/sus.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 14 )
+extents = Vector2( 6, 0.5 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Attack"
@@ -285,7 +285,7 @@ texture = ExtResource( 4 )
 hframes = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2 )
+position = Vector2( 0, 15.5 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
