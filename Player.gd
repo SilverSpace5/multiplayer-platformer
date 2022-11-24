@@ -11,13 +11,21 @@ var timer = 0
 var lastTime = 0
 var diving = false
 var move = Vector2.ZERO
+var jumpPress = 0
+var onFloor3 = 0
+var dived = 0
 
 func _process(delta):
 	timer += delta
-	var onFloor = false
+	var onFloor2 = false
 	for body in $Area2D.get_overlapping_bodies():
 		if body.name != name:
-			onFloor = true
+			onFloor2 = true
+	onFloor3 -= 1
+	dived -= delta
+	if onFloor2:
+		onFloor3 = 10
+	var onFloor = onFloor3 > 0
 	if id == network.id:
 		global.player = self
 		$Player.texture = global.textures[global.saveData["character"]]
@@ -25,6 +33,9 @@ func _process(delta):
 		
 		if Input.is_action_pressed("down"):
 			diving = true
+		
+		if diving and not is_on_floor():
+			dived = 0.25
 		
 		if diving:
 			if velocity.y < gravity:
@@ -38,14 +49,25 @@ func _process(delta):
 		if onFloor:
 			diving = false
 		
+		jumpPress -= delta
+		
+		if Input.is_action_just_pressed("jump"):
+			jumpPress = 0.1
+		
 		if is_on_floor():
 			velocity.y = 0
-		if Input.is_action_just_pressed("jump") and onFloor:
+		if dived > 0:
+			jumpSpeed *= 1.25
+		if jumpPress > 0 and onFloor:
 			jump = 0
+			jumpPress = 0
 			velocity.y = -jumpSpeed
 		if Input.is_action_pressed("jump") and jump < 6:
 			jump += 1
 			velocity.y += -jumpSpeed*jump
+		if dived > 0:
+			jumpSpeed /= 1.25
+		
 		if Input.is_action_pressed("left"):
 			velocity.x -= speed
 			$Player.scale.x = -4
