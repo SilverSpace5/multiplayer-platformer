@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Players/tim.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Players/blue-guy2.png" type="Texture" id=2]
 [ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 9, 10, 0 ]
+"values": [ 10, 11, 12 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -72,7 +72,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 8 ]
+"values": [ 9 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -106,7 +106,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 8 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -160,7 +160,7 @@ jumpSpeed = 35.0
 [node name="Player" type="Sprite" parent="."]
 scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
-hframes = 11
+hframes = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )
