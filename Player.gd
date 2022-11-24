@@ -81,7 +81,7 @@ func _process(delta):
 					if updateTimer > 0.1:
 						$Tween.interpolate_property(self, "position", position, pos, 0.5)
 					else:
-						$Tween.interpolate_property(self, "position", position, pos, 0)
+						$Tween.interpolate_property(self, "position", position, pos, 0.1)
 					$Tween.start()
 					lastPos = pos
 					velocity = vel
