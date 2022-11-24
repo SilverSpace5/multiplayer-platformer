@@ -10,9 +10,12 @@ var jump = 0
 var timer = 0
 var lastPos = Vector2.ZERO
 var diving = false
+var move = Vector2.ZERO
+var updateTimer = 0
 
 func _process(delta):
 	timer += delta
+	updateTimer += delta
 	var onFloor = false
 	for body in $Area2D.get_overlapping_bodies():
 		if body.name != name:
@@ -63,20 +66,30 @@ func _process(delta):
 		if diving:
 			anim = "Dive"
 		$AnimationPlayer.play(anim)
+		move = Vector2.ZERO
+		var lastPos2 = position
 		move_and_slide(velocity, Vector2.UP)
+		move = position-lastPos2
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
+				var pos = Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1])
+				var vel = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
 				$Player.texture = global.textures[network.playerData[id]["character"]]
 				$Username.text = network.playerData[id]["username"]
-				if lastPos != Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]):
-					$Tween.interpolate_property(self, "position", position, Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]), 0.1)
+				if lastPos != pos:
+					if updateTimer > 0.1:
+						$Tween.interpolate_property(self, "position", position, pos, 0.5)
+					else:
+						$Tween.interpolate_property(self, "position", position, pos, 0)
 					$Tween.start()
-					lastPos = Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1])
+					lastPos = pos
+					velocity = vel
+					updateTimer = 0
 				$Player.scale.x = network.playerData[id]["scale"]
 				if $Tween.is_active():
 					$AnimationPlayer.play(network.playerData[id]["anim"])
-					velocity = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
+					velocity = vel
 			if not $Tween.is_active():
 				anim = "Idle"
 				if abs(velocity.x) > speed/10:
@@ -96,6 +109,6 @@ func _on_sendData_timeout():
 		network.data["pos"] = [position.x, position.y]
 		network.data["anim"] = anim
 		network.data["scale"] = $Player.scale.x
-		network.data["velocity"] = [velocity.x, velocity.y]
+		network.data["velocity"] = [move.x, move.y]
 		network.data["character"] = global.saveData["character"]
 		network.data["username"] = global.saveData["username"]

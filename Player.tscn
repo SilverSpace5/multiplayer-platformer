@@ -198,6 +198,7 @@ custom_fonts/font = SubResource( 11 )
 align = 1
 
 [node name="sendData" type="Timer" parent="."]
+wait_time = 0.1
 autostart = true
 
 [connection signal="timeout" from="sendData" to="." method="_on_sendData_timeout"]
