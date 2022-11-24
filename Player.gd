@@ -63,8 +63,15 @@ func _process(delta):
 			anim = "Jump"
 		if diving:
 			anim = "Dive"
-		if Input. is_action_just_pressed("attack"):
-			anim = "vent"
+		if Input.is_action_just_pressed("attack") or $AnimationPlayer.current_animation == "Attack" or $AnimationPlayer.current_animation == "vent":
+			if global.saveData["character"] == 3:
+				if $Player.visible:
+					anim = "vent"
+				elif not $AnimationPlayer.current_animation == "vent":
+					print("reset")
+					anim = "RESET"
+			else:
+				anim = "Attack"
 		$AnimationPlayer.play(anim)
 		move = Vector2.ZERO
 		var lastPos2 = position

@@ -11,7 +11,6 @@ extents = Vector2( 6, 14 )
 [sub_resource type="Animation" id=2]
 resource_name = "Attack"
 length = 0.3
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player:frame")
 tracks/0/interp = 1
@@ -149,7 +148,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -23, 0 ) ]
+"values": [ Vector2( 0, 0 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Player:visible")
@@ -161,6 +160,18 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Vent(sus):visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
 "values": [ false ]
 }
 
@@ -183,7 +194,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=13]
 resource_name = "vent"
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Vent(sus):frame")
 tracks/0/interp = 1
@@ -232,6 +243,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true, true, false ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Vent(sus):visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 6, 1.5 )
@@ -250,14 +273,13 @@ gravity = 35.0
 jumpSpeed = 35.0
 
 [node name="Vent(sus)" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, 10.25 )
 scale = Vector2( 3, 1.8125 )
 texture = ExtResource( 2 )
 hframes = 5
 
 [node name="Player" type="Sprite" parent="."]
-visible = false
-position = Vector2( -23, 0 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 hframes = 13
