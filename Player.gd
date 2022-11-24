@@ -63,6 +63,8 @@ func _process(delta):
 			anim = "Jump"
 		if diving:
 			anim = "Dive"
+		if Input. is_action_just_pressed("attack"):
+			anim = "vent"
 		$AnimationPlayer.play(anim)
 		move = Vector2.ZERO
 		var lastPos2 = position
