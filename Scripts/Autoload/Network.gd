@@ -1,41 +1,59 @@
 extends Node
 
+# the client
 var server = WebSocketClient.new()
+# how the server identifies you
 var id = ""
+# whether you have connected
 var connected = false
+# Data that is sent to the server every frame of the game
 var data = {}
+# Everyone's data
 var playerData = {}
+# Whether you have found the server
 var foundServer = false
 
+# Sends data to server
 func sendData(data):
 	if foundServer:
 		server.get_peer(1).put_packet(JSON.print(data).to_utf8())
 
 func _ready():
+	# Gets a unique id for networking
 	id = global.getId(10)
+	# Sets up functions for events in the client
 	server.connect("data_received", self, "_onData")
 	server.connect("connection_established", self, "_connected")
 	server.connect("connection_closed", self, "_disconnected")
 	server.connect("connection_error", self, "_disconnected")
+	# Debug
 	print("Connecting...")
+	# Will retry connection
 	while not connected:
+		# Connects to server
 		server.connect_to_url("wss://server-template.silverspace505.repl.co")
 		yield(get_tree().create_timer(3), "timeout")
+		# Reconnecting
 		if not connected:
 			print("Retrying")
 			server.disconnect_from_host()
 	
 func _process(delta):
+	# Allows for messages to go through the server and client
 	server.poll()
+	# Sets data for you, so that the rest of the code knows if your playing
 	playerData[id] = data
+	# Broadcasts data to everyong whos playing
 	if connected:
 		sendData({"broadcast": [{"data": [id, data]}, false]})
-	#client.get_peer(1).put_packet()
 
 func _disconnected(wasClean):
+	# Updating info vars
 	connected = false
 	foundServer = false
+	# Debug
 	print("Disconnected, reconnecting")
+	# Reconnects
 	while not connected:
 		server.connect_to_url("wss://server-template.silverspace505.repl.co")
 		yield(get_tree().create_timer(3), "timeout")
@@ -43,10 +61,11 @@ func _disconnected(wasClean):
 			print("Retrying")
 			server.disconnect_from_host()
 	
-
+# Runs when found the server
 func _connected(proto):
 	print("Found Server")
 	foundServer = true
+	# Requests to the server to join (oiesnfoi is the password)
 	sendData({"connected": [id, "oiesnfoi"]})
 
 func playerDisconnected(id):

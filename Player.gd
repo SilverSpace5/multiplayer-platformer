@@ -8,7 +8,7 @@ var anim = "Idle"
 var id = ""
 var jump = 0
 var timer = 0
-var lastPos = Vector2.ZERO
+var lastTime = 0
 var diving = false
 var move = Vector2.ZERO
 
@@ -56,9 +56,15 @@ func _process(delta):
 		if is_on_ceiling():
 			velocity.y = gravity
 		
-		anim = "Idle"
+		if Input.is_action_pressed("down"):
+			anim = "Crouch"
+		else:
+			anim = "Idle"
 		if abs(velocity.x) > speed/10:
-			anim = "Run"
+			if Input.is_action_pressed("down"):
+				anim = "CrouchWalk"
+			else:
+				anim = "Run"
 		if not onFloor:
 			anim = "Jump"
 		if diving:
@@ -68,7 +74,6 @@ func _process(delta):
 				if $Player.visible:
 					anim = "vent"
 				elif not $AnimationPlayer.current_animation == "vent":
-					print("reset")
 					anim = "RESET"
 			else:
 				anim = "Attack"
@@ -84,10 +89,10 @@ func _process(delta):
 				var vel = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
 				$Player.texture = global.textures[network.playerData[id]["character"]]
 				$Username.text = network.playerData[id]["username"]
-				if lastPos != pos:
+				if lastTime != network.playerData[id]["timer"]:
 					$Tween.interpolate_property(self, "position", position, pos, 0.1)
 					$Tween.start()
-					lastPos = pos
+					lastTime = network.playerData[id]["timer"]
 					velocity = vel
 				$Player.scale.x = network.playerData[id]["scale"]
 				if $Tween.is_active():
