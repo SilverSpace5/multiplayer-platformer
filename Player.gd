@@ -107,6 +107,7 @@ func _process(delta):
 		move = position-lastPos2
 	else:
 		if network.playerData.has(id):
+			visible = true
 			if network.playerData[id].has("pos"):
 				collision_layer = 2
 				collision_mask = 2
@@ -134,8 +135,7 @@ func _process(delta):
 				velocity.y += gravity
 				velocity.x *= 0.9
 		else:
-			if timer > 1:
-				queue_free()
+			visible = false
 
 func _on_sendData_timeout():
 	if network.id == id:
