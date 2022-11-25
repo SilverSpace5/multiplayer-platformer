@@ -38,11 +38,11 @@ func _process(delta):
 			dived = 0.25
 		
 		if diving:
-			if velocity.y < gravity:
-				velocity.y = gravity
+			if velocity.y < gravity * delta:
+				velocity.y = gravity * delta
 			gravity *= 2
-		velocity.y += gravity
-		velocity.x *= 0.5
+		velocity.y += gravity * delta
+		velocity.x *= 0.0084 / delta
 		if diving:
 			gravity /= 2
 		
@@ -65,6 +65,7 @@ func _process(delta):
 			velocity.y = -jumpSpeed
 		if Input.is_action_pressed("jump") and jump < 6:
 			jump += 1
+			onFloor3 = 0
 			velocity.y += -jumpSpeed*jump
 		if dived > 0:
 			jumpSpeed /= 1.25
@@ -77,7 +78,7 @@ func _process(delta):
 			$Player.scale.x = 4
 		
 		if is_on_ceiling():
-			velocity.y = gravity
+			velocity.y = gravity*delta
 		
 		if Input.is_action_pressed("down"):
 			anim = "Crouch"
@@ -131,9 +132,9 @@ func _process(delta):
 				if not onFloor:
 					anim = "Jump"
 				$AnimationPlayer.play(anim)
+				velocity.y += gravity*delta
+				velocity.x = 0
 				move_and_slide(velocity, Vector2.UP)
-				velocity.y += gravity
-				velocity.x *= 0.9
 		else:
 			visible = false
 

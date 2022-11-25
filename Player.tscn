@@ -269,7 +269,7 @@ font_data = ExtResource( 3 )
 z_index = -1
 script = ExtResource( 1 )
 speed = 200.0
-gravity = 35.0
+gravity = 2000.0
 jumpSpeed = 35.0
 
 [node name="Vent(sus)" type="Sprite" parent="."]
