@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/vent_(sus).png" type="Texture" id=2]
 [ext_resource path="res://Assets/homespun.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Assets/Players/sus.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Players/bob.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 14 )
@@ -23,6 +23,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 10, 11, 12 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Crouch"
@@ -40,11 +52,24 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 5 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "CrouchWalk"
 length = 0.4
 loop = true
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player:frame")
 tracks/0/interp = 1
@@ -56,6 +81,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("step:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -3, 16 ), Vector2( 3, 16 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -74,6 +123,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 9 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "Idle"
@@ -90,6 +151,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -108,9 +181,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 8 ]
 }
-
-[sub_resource type="Animation" id=12]
-resource_name = "New Anim"
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 0.001
@@ -174,11 +256,36 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("step:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("step:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2, 16 ) ]
+}
 
 [sub_resource type="Animation" id=9]
 resource_name = "Run"
 length = 0.4
 loop = true
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player:frame")
 tracks/0/interp = 1
@@ -190,6 +297,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("step:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("step:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 6, 16 ), Vector2( -6, 16 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -296,7 +427,6 @@ anims/CrouchWalk = SubResource( 4 )
 anims/Dive = SubResource( 5 )
 anims/Idle = SubResource( 6 )
 anims/Jump = SubResource( 7 )
-"anims/New Anim" = SubResource( 12 )
 anims/RESET = SubResource( 8 )
 anims/Run = SubResource( 9 )
 anims/vent = SubResource( 13 )
@@ -324,5 +454,65 @@ align = 1
 [node name="sendData" type="Timer" parent="."]
 wait_time = 0.03
 autostart = true
+
+[node name="step" type="CPUParticles2D" parent="."]
+position = Vector2( -2, 16 )
+emitting = false
+amount = 50
+lifetime = 0.25
+lifetime_randomness = 1.0
+local_coords = false
+spread = 180.0
+initial_velocity = 15.46
+scale_amount = 3.0
+scale_amount_random = 1.0
+color = Color( 0.560784, 0.560784, 0.560784, 1 )
+
+[node name="jump" type="CPUParticles2D" parent="."]
+position = Vector2( -0.544165, 16 )
+emitting = false
+amount = 200
+lifetime = 0.25
+lifetime_randomness = 1.0
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2( 5, 1 )
+spread = 180.0
+initial_velocity = 28.73
+scale_amount = 3.0
+scale_amount_random = 1.0
+color = Color( 0.560784, 0.560784, 0.560784, 1 )
+
+[node name="power" type="CPUParticles2D" parent="."]
+position = Vector2( -0.544165, 16 )
+emitting = false
+amount = 50
+lifetime = 0.25
+lifetime_randomness = 1.0
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2( 5, 1 )
+spread = 180.0
+initial_velocity = 28.73
+scale_amount = 3.0
+scale_amount_random = 1.0
+color = Color( 0.560784, 0.560784, 0.560784, 1 )
+hue_variation = 0.1
+hue_variation_random = 1.0
+
+[node name="super" type="CPUParticles2D" parent="."]
+position = Vector2( -0.544165, -12 )
+emitting = false
+amount = 200
+lifetime_randomness = 1.0
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2( 5, 1 )
+direction = Vector2( 0, 1 )
+initial_velocity = 50.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+hue_variation = 0.25
+hue_variation_random = 1.0
 
 [connection signal="timeout" from="sendData" to="." method="_on_sendData_timeout"]

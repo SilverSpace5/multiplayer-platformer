@@ -31,7 +31,7 @@ func _ready():
 	# Will retry connection
 	while not connected:
 		# Connects to server
-		server.connect_to_url("wss://server-template.silverspace505.repl.co")
+		server.connect_to_url("wss://The-Tower-Server.silverspace505.repl.co")
 		yield(get_tree().create_timer(3), "timeout")
 		# Reconnecting
 		if not connected:
@@ -57,7 +57,7 @@ func _disconnected(wasClean):
 		print("Reconnecting")
 		# Reconnects
 		while not connected:
-			server.connect_to_url("wss://server-template.silverspace505.repl.co")
+			server.connect_to_url("wss://The-Tower-Server.silverspace505.repl.co")
 			yield(get_tree().create_timer(3), "timeout")
 			if not connected:
 				print("Retrying")
@@ -71,7 +71,7 @@ func _connected(proto):
 	print("Found Server")
 	foundServer = true
 	# Requests to the server to join (this detects the version of the game)
-	sendData({"connected": [id, "multiplayer-platformer-v1"]})
+	sendData({"connected": [id, "the-tower-v1"]})
 
 func playerDisconnected(id):
 	playerData.erase(id)

@@ -56,13 +56,19 @@ func _process(delta):
 		
 		if is_on_floor():
 			velocity.y = 0
+		$jump.emitting = false
+		$power.emitting = false
+		$super.emitting = velocity.y < -jumpSpeed*17.5
 		if dived > 0:
+			$power.emitting = true
 			jumpSpeed *= 1.25
 		if jumpPress > 0 and onFloor:
+			$jump.emitting = true
 			jump = 0
 			jumpPress = 0
 			onFloor3 = 0
 			velocity.y = -jumpSpeed
+			
 		if Input.is_action_pressed("jump") and jump < 6:
 			jump += 1
 			onFloor3 = 0
@@ -70,12 +76,18 @@ func _process(delta):
 		if dived > 0:
 			jumpSpeed /= 1.25
 		
+		if Input.is_action_pressed("down"):
+			speed /= 2
+		
 		if Input.is_action_pressed("left"):
 			velocity.x -= speed
 			$Player.scale.x = -4
 		if Input.is_action_pressed("right"):
 			velocity.x += speed
 			$Player.scale.x = 4
+		
+		if Input.is_action_pressed("down"):
+			speed *= 2
 		
 		if is_on_ceiling():
 			velocity.y = gravity*delta
@@ -112,6 +124,9 @@ func _process(delta):
 			if network.playerData[id].has("pos"):
 				collision_layer = 2
 				collision_mask = 2
+				$jump.emitting = network.playerData[id]["part"][0]
+				$power.emitting = network.playerData[id]["part"][1]
+				$super.emitting = network.playerData[id]["part"][2]
 				var pos = Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1])
 				var vel = Vector2(network.playerData[id]["velocity"][0], network.playerData[id]["velocity"][1])
 				$Player.texture = global.textures[network.playerData[id]["character"]]
@@ -146,3 +161,4 @@ func _on_sendData_timeout():
 		network.data["velocity"] = [move.x, move.y]
 		network.data["character"] = global.saveData["character"]
 		network.data["username"] = global.saveData["username"]
+		network.data["part"] = [$jump.emitting, $power.emitting, $super.emitting]

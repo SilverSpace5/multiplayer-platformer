@@ -24,6 +24,7 @@ func _process(delta):
 		var dis = target.distance_to(position)
 		var disX = abs(target.x-position.x)
 		
+		$jump.emitting = velocity.y < -jumpSpeed/1.1
 		velocity.y += gravity
 		velocity.x *= 0.9
 		if is_on_ceiling():
@@ -32,6 +33,7 @@ func _process(delta):
 			velocity.y = 0
 			if dis < 200:
 				if position.y > target.y: #rand_range(0, 100) < 1:
+					
 					velocity.y = -jumpSpeed
 			else:
 				if rand_range(0, 100) < 1:
@@ -79,11 +81,13 @@ func _process(delta):
 		network.data["velocity"] = [velocity.x, velocity.y]
 		network.data["character"] = global.saveData["character"]
 		network.data["username"] = global.saveData["username"]
+		network.data["part"] = [$jump.emitting, false, false]
 	else:
 		if network.playerData.has(id):
 			if network.playerData[id].has("pos"):
 				collision_layer = 2
 				collision_mask = 2
+				$jump.emitting = network.playerData[id]["part"][0]
 				$Player.texture = global.textures[network.playerData[id]["character"]]
 				$Username.text = network.playerData[id]["username"]
 				if lastPos != Vector2(network.playerData[id]["pos"][0], network.playerData[id]["pos"][1]):
