@@ -4,7 +4,7 @@ var timer = 0
 
 func _process(delta):
 	timer += delta
-	$Title.rect_position.x = 252 + sin(timer*2) * 10
+	$Title.rect_position.x = 387 + sin(timer*2) * 10
 	$Rotate.rect_rotation = sin(timer*1.25) * 3
 	global.saveData["username"] = $Rotate/Customization/Username.text
 	$Rotate/Customization/Player.texture = global.textures[global.saveData["character"]]

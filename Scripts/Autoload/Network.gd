@@ -52,14 +52,19 @@ func _disconnected(wasClean):
 	connected = false
 	foundServer = false
 	# Debug
-	print("Disconnected, reconnecting")
-	# Reconnects
-	while not connected:
-		server.connect_to_url("wss://server-template.silverspace505.repl.co")
-		yield(get_tree().create_timer(3), "timeout")
-		if not connected:
-			print("Retrying")
-			server.disconnect_from_host()
+	print("Disconnected")
+	if not wasClean:
+		print("Reconnecting")
+		# Reconnects
+		while not connected:
+			server.connect_to_url("wss://server-template.silverspace505.repl.co")
+			yield(get_tree().create_timer(3), "timeout")
+			if not connected:
+				print("Retrying")
+				server.disconnect_from_host()
+	else:
+		print("Timeout")
+		get_tree().change_scene("res://Scenes/Timeout.tscn")
 	
 # Runs when found the server
 func _connected(proto):
