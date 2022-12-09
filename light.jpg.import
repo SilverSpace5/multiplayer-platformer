@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sus.png-09f33a59da979ed110ea25906a4e7c01.stex"
+path="res://.import/light.jpg-e2d2a24d92bb6c6f94c9ceb670497fc9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Players/sus.png"
-dest_files=[ "res://.import/sus.png-09f33a59da979ed110ea25906a4e7c01.stex" ]
+source_file="res://light.jpg"
+dest_files=[ "res://.import/light.jpg-e2d2a24d92bb6c6f94c9ceb670497fc9.stex" ]
 
 [params]
 

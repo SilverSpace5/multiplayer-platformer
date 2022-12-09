@@ -16,7 +16,7 @@ var timer = 0
 # 0 = Blue Guy, 1 = Tim
 
 func _ready():
-	for character in ["bob", "tim", "Phil", "sus"]:
+	for character in ["bob", "tim", "Phil", "assasin"]:
 		textures.append(load("res://Assets/Players/" + character + ".png"))
 	
 	# Gets the current scene
