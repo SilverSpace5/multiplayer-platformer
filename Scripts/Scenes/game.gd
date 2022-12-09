@@ -21,6 +21,7 @@ func _ready():
 
 func _process(delta):
 	if global.player:
+		Cursor.position += (global.player.position-$Camera2D.position)/5
 		$Camera2D.position += (global.player.position-$Camera2D.position)/5
 	timer += delta
 	if timer < 0.5:
