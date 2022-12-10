@@ -1,9 +1,10 @@
-[gd_resource type="TileSet" load_steps=16 format=2]
+[gd_resource type="TileSet" load_steps=17 format=2]
 
 [ext_resource path="res://Assets/tiles.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Animated Tiles/water.tres" type="Texture" id=2]
 [ext_resource path="res://Assets/camp fire off.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Animated Tiles/red_portal.tres" type="Texture" id=4]
+[ext_resource path="res://Assets/Animated Tiles/lava.tres" type="Texture" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
@@ -377,3 +378,17 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 18/shape_one_way_margin = 0.0
 18/shapes = [  ]
 18/z_index = 0
+19/name = "lava.tres 19"
+19/texture = ExtResource( 5 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 0, 0, 8, 8 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 0, 0 )
+19/navigation_offset = Vector2( 0, 0 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape_one_way = false
+19/shape_one_way_margin = 0.0
+19/shapes = [  ]
+19/z_index = 0
