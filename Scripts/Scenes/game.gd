@@ -4,7 +4,7 @@ var timer = 0
 
 func _ready():
 	for tilePos in $Detail.get_used_cells_by_id(17):
-		#$Foreground.set_cellv(tilePos, -1)
+		$Detail.set_cellv(tilePos, -1)
 		var water = load("res://Water.tscn").instance()
 		water.position = tilePos*32+Vector2(16, 16)
 		$Water.add_child(water)
