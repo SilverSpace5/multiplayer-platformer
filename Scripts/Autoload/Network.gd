@@ -12,6 +12,8 @@ var data = {}
 var playerData = {}
 # Whether you have found the server
 var foundServer = false
+# Reconnecting
+var reconnecting = false
 
 # Sends data to server
 func sendData(data):
@@ -29,14 +31,16 @@ func _ready():
 	# Debug
 	print("Connecting...")
 	# Will retry connection
-	while not connected:
+	while not connected and not reconnecting:
 		# Connects to server
 		server.connect_to_url("wss://The-Tower-Server.silverspace505.repl.co")
 		yield(get_tree().create_timer(3), "timeout")
+		reconnecting = true
 		# Reconnecting
 		if not connected:
 			print("Retrying")
 			server.disconnect_from_host()
+		reconnecting = false
 	
 func _process(delta):
 	# Allows for messages to go through the server and client
@@ -55,6 +59,7 @@ func _disconnected(wasClean):
 	print("Disconnected")
 	if not wasClean:
 		print("Reconnecting")
+		reconnecting = true
 		# Reconnects
 		while not connected:
 			server.connect_to_url("wss://The-Tower-Server.silverspace505.repl.co")
@@ -62,6 +67,7 @@ func _disconnected(wasClean):
 			if not connected:
 				print("Retrying")
 				server.disconnect_from_host()
+		reconnecting = false
 	else:
 		print("Timeout")
 		get_tree().change_scene("res://Scenes/Timeout.tscn")
