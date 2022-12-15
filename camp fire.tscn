@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/camp fire.png" type="Texture" id=1]
 [ext_resource path="res://camp fire.gd" type="Script" id=3]
-[ext_resource path="res://light.jpg" type="Texture" id=4]
 
 [sub_resource type="CubeMesh" id=4]
 
@@ -105,11 +104,5 @@ shape = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hover"]
 shape = SubResource( 6 )
-
-[node name="Light2D" type="Light2D" parent="."]
-visible = false
-scale = Vector2( 0.122222, 0.163889 )
-texture = ExtResource( 4 )
-color = Color( 1, 0.196078, 0.176471, 1 )
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

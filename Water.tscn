@@ -1,34 +1,31 @@
 [gd_scene load_steps=5 format=2]
 
 [sub_resource type="Shader" id=5]
-resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 void fragment() {
-	vec2 uv = UV;
 	vec2 uv2 = SCREEN_UV;
-	uv.x += TIME/2.0;
-	uv2.x += (texture(TEXTURE, uv).r-0.5)*0.1;
-	if (texture(SCREEN_TEXTURE, uv2).b > 0.5) {
-		COLOR = texture(SCREEN_TEXTURE, uv2)+texture(TEXTURE, uv)-vec4(0, 0, 0, 1);
-	} else {
-		COLOR = vec4(0.0, 0.0, 0.0, 0.0)
-	}
+	uv2.x += uv2.y*0.25*sin(TIME);
+	COLOR = texture(SCREEN_TEXTURE, uv2) + texture(TEXTURE, UV)*0.5 - vec4(0, 0, 0, 0.5);
+}
+
+void vertex() {
+	VERTEX.x += VERTEX.y*0.25*sin(TIME);
 }"
 
 [sub_resource type="ShaderMaterial" id=8]
-resource_local_to_scene = true
 shader = SubResource( 5 )
 
-[sub_resource type="OpenSimplexNoise" id=7]
+[sub_resource type="OpenSimplexNoise" id=9]
 
-[sub_resource type="NoiseTexture" id=9]
-width = 32
-height = 32
+[sub_resource type="NoiseTexture" id=10]
+width = 64
+height = 64
 seamless = true
-noise = SubResource( 7 )
+noise = SubResource( 9 )
 
 [node name="Water" type="Sprite"]
-modulate = Color( 0, 0.694118, 1, 1 )
+modulate = Color( 0, 0.905882, 1, 1 )
 material = SubResource( 8 )
-texture = SubResource( 9 )
+scale = Vector2( 0.5, 0.5 )
+texture = SubResource( 10 )
